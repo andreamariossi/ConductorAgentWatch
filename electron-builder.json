@@ -1,0 +1,46 @@
+{
+  "appId": "com.andrea.conductoragentwatch",
+  "productName": "ConductorAgentWatch",
+  "directories": {
+    "output": "release"
+  },
+  "files": [
+    "dist/**/*",
+    "node_modules/**/*"
+  ],
+  "asarUnpack": [
+    "node_modules/ccusage/**",
+    "node_modules/@ccusage/**"
+  ],
+  "mac": {
+    "category": "public.app-category.developer-tools",
+    "icon": "assets/icon.icns",
+    "target": [
+      {
+        "target": "dmg",
+        "arch": ["x64", "arm64"]
+      }
+    ],
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false,
+    "extendInfo": {
+      "LSUIElement": true,
+      "CFBundleDisplayName": "ConductorAgentWatch",
+      "CFBundleName": "ConductorAgentWatch",
+      "CFBundleExecutable": "ConductorAgentWatch",
+      "NSHumanReadableCopyright": "Copyright © 2026 ConductorAgentWatch. All rights reserved.",
+      "CFBundleDocumentTypes": [],
+      "LSMinimumSystemVersion": "10.15.0"
+    }
+  },
+  "dmg": {
+    "title": "ConductorAgentWatch",
+    "icon": "assets/icon.icns"
+  },
+  "win": {
+    "target": "nsis"
+  },
+  "linux": {
+    "target": "AppImage"
+  }
+}
