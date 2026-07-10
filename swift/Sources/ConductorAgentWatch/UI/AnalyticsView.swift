@@ -182,29 +182,35 @@ struct AnalyticsView: View {
         )
     }
 
-    // MARK: - Dynamic Chart
+    private func dayLabel(_ date: Date) -> String {
+        let f = DateFormatter()
+        f.dateFormat = "M/d"
+        return f.string(from: date)
+    }
 
     private var analyticsChart: some View {
         chartCard(title: "\(selectedMetric == .tokens ? "Daily Tokens" : "Daily Cost") — last \(selectedDays) days") {
             Chart(chartData) { day in
+                let xVal = dayLabel(day.date)
+                let yVal = selectedMetric == .tokens ? Double(day.tokens.total) : day.cost
+                
                 switch chartType {
                 case .bar:
                     BarMark(
-                        x: .value("Day", day.date, unit: .day),
-                        y: .value(selectedMetric == .tokens ? "Tokens" : "Cost", selectedMetric == .tokens ? Double(day.tokens.total) : day.cost)
+                        x: .value("Day", xVal),
+                        y: .value(selectedMetric == .tokens ? "Tokens" : "Cost", yVal)
                     )
                     .foregroundStyle(chartColor)
                 case .line:
                     LineMark(
-                        x: .value("Day", day.date, unit: .day),
-                        y: .value(selectedMetric == .tokens ? "Tokens" : "Cost", selectedMetric == .tokens ? Double(day.tokens.total) : day.cost)
+                        x: .value("Day", xVal),
+                        y: .value(selectedMetric == .tokens ? "Tokens" : "Cost", yVal)
                     )
                     .foregroundStyle(chartColor)
-                    .interpolationMethod(.catmullRom)
                 case .area:
                     AreaMark(
-                        x: .value("Day", day.date, unit: .day),
-                        y: .value(selectedMetric == .tokens ? "Tokens" : "Cost", selectedMetric == .tokens ? Double(day.tokens.total) : day.cost)
+                        x: .value("Day", xVal),
+                        y: .value(selectedMetric == .tokens ? "Tokens" : "Cost", yVal)
                     )
                     .foregroundStyle(
                         LinearGradient(
@@ -213,14 +219,12 @@ struct AnalyticsView: View {
                             endPoint: .bottom
                         )
                     )
-                    .interpolationMethod(.catmullRom)
                     
                     LineMark(
-                        x: .value("Day", day.date, unit: .day),
-                        y: .value(selectedMetric == .tokens ? "Tokens" : "Cost", selectedMetric == .tokens ? Double(day.tokens.total) : day.cost)
+                        x: .value("Day", xVal),
+                        y: .value(selectedMetric == .tokens ? "Tokens" : "Cost", yVal)
                     )
                     .foregroundStyle(chartColor)
-                    .interpolationMethod(.catmullRom)
                 }
             }
             .chartYAxis {
