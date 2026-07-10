@@ -54,6 +54,18 @@ Conductor AgentWatch runs as a menu-bar-only app built on `NSStatusItem` + `NSPo
 
 ## Installation
 
+### Download Precompiled Binary (Recommended)
+
+1. Go to the [Releases](https://github.com/andreamariossi/ConductorAgentWatch/releases) page of this repository.
+2. Download **`ConductorAgentWatch-arm64.zip`** from the latest release.
+3. Double-click the downloaded `.zip` file to extract it, and drag **`ConductorAgentWatch.app`** into your `/Applications` directory.
+
+> [!TIP]
+> **First Launch (Gatekeeper Bypass)**: Since the precompiled binary is ad-hoc signed, macOS Gatekeeper may block launch. To bypass this, **right-click `ConductorAgentWatch.app` &rarr; Open** and click Open on the confirmation pop-up. Alternatively, remove the quarantine attribute via terminal:
+> ```bash
+> xattr -dr com.apple.quarantine /Applications/ConductorAgentWatch.app
+> ```
+
 ### Build from Source
 
 Requires **Xcode 16.4 / Swift 6.1** and **macOS 14+** (Sonoma).
