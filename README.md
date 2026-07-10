@@ -11,17 +11,30 @@ Conductor AgentWatch runs as a menu-bar-only app built on `NSStatusItem` + `NSPo
 
 ## Screenshots
 
-| Overview | Dashboard |
-| :---: | :---: |
-| ![Overview](./screenshots/overview.png) | ![Dashboard](./screenshots/dashboard.png) |
-
-| Live Monitoring | Usage Analytics |
-| :---: | :---: |
-| ![Live](./screenshots/live.png) | ![Analytics](./screenshots/analytics.png) |
-
-| Settings | Terminal Logs |
-| :---: | :---: |
-| ![Settings](./screenshots/settings.png) | ![Terminal](./screenshots/terminal.png) |
+<table align="center">
+  <tr>
+    <td align="center"><b>Overview</b></td>
+    <td align="center"><b>Dashboard</b></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/overview.png" width="380" alt="Overview" /></td>
+    <td><img src="./screenshots/dashboard.png" width="380" alt="Dashboard" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Live Monitoring</b></td>
+    <td align="center"><b>Usage Analytics</b></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/live.png" width="380" alt="Live" /></td>
+    <td><img src="./screenshots/analytics.png" width="380" alt="Analytics" /></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2"><b>Settings</b></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2"><img src="./screenshots/settings.png" width="300" alt="Settings" /></td>
+  </tr>
+</table>
 
 ---
 
