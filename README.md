@@ -14,6 +14,7 @@ Conductor AgentWatch runs as a menu-bar-only app built on `NSStatusItem` + `NSPo
 ![Overview](./screenshots/overview.png)
 ![Dashboard](./screenshots/dashboard.png)
 ![Live](./screenshots/live.png)
+![Analytics](./screenshots/analytics.png)
 ![Settings](./screenshots/settings.png)
 
 ---
