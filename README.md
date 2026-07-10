@@ -11,9 +11,10 @@ Conductor AgentWatch runs as a menu-bar-only app built on `NSStatusItem` + `NSPo
 
 ## Screenshots
 
+![Overview](./screenshots/overview.png)
 ![Dashboard](./screenshots/dashboard.png)
-![Analytics](./screenshots/analytics.png)
-![Terminal](./screenshots/terminal.png)
+![Live](./screenshots/live.png)
+![Settings](./screenshots/settings.png)
 
 ---
 
@@ -80,6 +81,16 @@ Conductor AgentWatch is fully integrated with your local developer tools. It doe
 * **Graphics**: Swift Charts for analytics
 * **Integration**: Custom non-blocking file watcher for `~/.claude/` activity
 * **Footprint**: Under 3 MB disk usage, minimal memory footprint.
+
+---
+
+## Credits
+
+This project is a renamed and enhanced fork of the original **[CCSeva](https://github.com/Iamshankhadeep/ccseva)** application created by **[Shankhadeep Dey](https://github.com/Iamshankhadeep)**. 
+* **Original GitHub Repository**: [Iamshankhadeep/ccseva](https://github.com/Iamshankhadeep/ccseva)
+* **Author's Reddit Post**: [Built my first side project outside of work: A native macOS menu bar app for tracking Claude Code API usage in real-time](https://www.reddit.com/r/ClaudeAI/comments/1lmplia/built_my_first_side_project_outside_of_work_a/)
+
+Built with ❤️ using [Swift](https://swift.org), [SwiftUI](https://developer.apple.com/xcode/swiftui/), and [ccusage](https://github.com/ryoppippi/ccusage) (for the usage data format and 5-hour block algorithm).
 
 ---
 
