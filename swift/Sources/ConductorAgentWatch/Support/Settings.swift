@@ -82,18 +82,29 @@ struct AppSettings: Equatable {
 
     /// Token limit used ONLY for the local-estimation fallback when the server
     /// limits endpoint is unavailable. `observedMaxBlockTokens` drives auto-detect.
-    func tokenLimit(observedMaxBlockTokens: Int) -> Int {
+    func tokenLimit(for agent: AIAgent, observedMaxBlockTokens: Int) -> Int {
         switch plan {
-        case .pro: return 7_000
-        case .max5: return 35_000
-        case .max20: return 140_000
-        case .custom: return max(customTokenLimit ?? 7_000, 1)
+        case .pro:
+            return agent == .claude ? 7_000 : (agent == .antigravity ? 10_000_000 : 100_000_000)
+        case .max5:
+            return agent == .claude ? 35_000 : (agent == .antigravity ? 25_000_000 : 250_000_000)
+        case .max20:
+            return agent == .claude ? 140_000 : (agent == .antigravity ? 50_000_000 : 500_000_000)
+        case .custom:
+            return max(customTokenLimit ?? 7_000, 1)
         case .auto:
             let observed = observedMaxBlockTokens
-            if observed <= 7_000 { return 7_000 }
-            if observed <= 35_000 { return 35_000 }
-            if observed <= 140_000 { return 140_000 }
-            return observed
+            switch agent {
+            case .claude:
+                if observed <= 7_000 { return 7_000 }
+                if observed <= 35_000 { return 35_000 }
+                if observed <= 140_000 { return 140_000 }
+                return observed
+            case .antigravity:
+                return max(50_000_000, observed * 2)
+            case .codex:
+                return max(500_000_000, observed * 2)
+            }
         }
     }
 }

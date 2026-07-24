@@ -290,7 +290,7 @@ final class UsageStore: ObservableObject {
 
     /// Effective plan token limit for local estimation.
     var localTokenLimit: Int {
-        settings.tokenLimit(observedMaxBlockTokens: snapshot?.maxBlockTokens ?? 0)
+        settings.tokenLimit(for: selectedAgent, observedMaxBlockTokens: snapshot?.maxBlockTokens ?? 0)
     }
 
     /// Five-hour window utilization in percent: server-truth when available,

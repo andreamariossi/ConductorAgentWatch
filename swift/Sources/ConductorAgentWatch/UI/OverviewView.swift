@@ -63,7 +63,7 @@ struct AgentCompactCard: View {
 
         // 2. Fall back to local token count vs nominal plan limit
         guard let s = agentSnapshot, let block = s.activeBlock else { return 0 }
-        let limit = store.settings.tokenLimit(observedMaxBlockTokens: s.maxBlockTokens)
+        let limit = store.settings.tokenLimit(for: agent, observedMaxBlockTokens: s.maxBlockTokens)
         return min(1.0, Double(block.totalTokens) / Double(max(limit, 1)))
     }
 
@@ -100,7 +100,7 @@ struct AgentCompactCard: View {
     // Weekly progress (0…1) and label
     private var weeklyFraction: Double {
         guard let s = agentSnapshot else { return 0 }
-        let limit = store.settings.tokenLimit(observedMaxBlockTokens: s.maxBlockTokens)
+        let limit = store.settings.tokenLimit(for: agent, observedMaxBlockTokens: s.maxBlockTokens)
         let cutoff = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
         let recent = s.daily.filter { $0.date >= cutoff }
         let weeklyTokens = recent.reduce(0) { $0 + $1.tokens.total }
