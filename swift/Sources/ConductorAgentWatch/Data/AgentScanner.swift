@@ -193,6 +193,7 @@ actor CodexScanner {
         var entries: [UsageEntry] = []
         var lastInput = 0
         var lastOutput = 0
+        var firstTimestamp: Date? = nil
         var currentModel = "gpt-4o"
         var currentCwd = "unknown"
         var lastRateLimits: LimitsSnapshot? = nil
@@ -211,6 +212,10 @@ actor CodexScanner {
                             let timestamp = ISO8601.parse(tsString) ?? Date()
                             lastSeen = timestamp
                             
+                            if firstTimestamp == nil {
+                                firstTimestamp = timestamp
+                            }
+                            
                             if lineObj.type == "turn_context", let p = lineObj.payload {
                                 currentModel = p.model ?? currentModel
                                 currentCwd = p.cwd ?? currentCwd
@@ -218,29 +223,36 @@ actor CodexScanner {
                                 if let tu = p.info?.total_token_usage {
                                     let inp = tu.input_tokens ?? lastInput
                                     let out = tu.output_tokens ?? lastOutput
-                                    let incIn = inp - lastInput
-                                    let incOut = out - lastOutput
                                     
-                                    if incIn > 0 || incOut > 0 {
-                                        let project = URL(fileURLWithPath: currentCwd).lastPathComponent
-                                        let (cost, priced) = PricingTable.cost(
-                                            model: currentModel, input: incIn, output: incOut,
-                                            cacheCreation: 0, cacheRead: 0
-                                        )
-                                        let entry = UsageEntry(
-                                            timestamp: timestamp,
-                                            model: currentModel,
-                                            inputTokens: incIn,
-                                            outputTokens: incOut,
-                                            cacheCreationTokens: 0,
-                                            cacheReadTokens: 0,
-                                            costUSD: cost,
-                                            projectName: project,
-                                            priced: priced
-                                        )
-                                        entries.append(entry)
+                                    let elapsed = firstTimestamp.map { timestamp.timeIntervalSince($0) } ?? 0
+                                    if elapsed <= 5.0 {
                                         lastInput = inp
                                         lastOutput = out
+                                    } else {
+                                        let incIn = inp - lastInput
+                                        let incOut = out - lastOutput
+                                        
+                                        if incIn > 0 || incOut > 0 {
+                                            let project = URL(fileURLWithPath: currentCwd).lastPathComponent
+                                            let (cost, priced) = PricingTable.cost(
+                                                model: currentModel, input: incIn, output: incOut,
+                                                cacheCreation: 0, cacheRead: 0
+                                            )
+                                            let entry = UsageEntry(
+                                                timestamp: timestamp,
+                                                model: currentModel,
+                                                inputTokens: incIn,
+                                                outputTokens: incOut,
+                                                cacheCreationTokens: 0,
+                                                cacheReadTokens: 0,
+                                                costUSD: cost,
+                                                projectName: project,
+                                                priced: priced
+                                            )
+                                            entries.append(entry)
+                                            lastInput = inp
+                                            lastOutput = out
+                                        }
                                     }
                                 }
                                 
